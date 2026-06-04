@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 환각 방지 37회 대비 공인중개사 2차 모의고사</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18202a;
+      --muted: #657080;
+      --line: #d8dee7;
+      --ok: #0f7a3b;
+      --bad: #b3261e;
+      --warn: #946200;
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --accent: #2357c5;
+      --accent-soft: #e8eefc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    header {
+      padding: 24px max(20px, calc((100vw - 1040px) / 2));
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+    h1 { margin: 0 0 8px; font-size: 26px; }
+    .meta { margin: 0; color: var(--muted); line-height: 1.6; }
+    .signals {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .signal {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--bg);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      gap: 14px;
+    }
+    .screen[hidden] { display: none; }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      flex-wrap: wrap;
+    }
+    .score, .count { font-weight: 700; }
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 650;
+    }
+    button:hover { border-color: var(--accent); }
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    article {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    h2 { margin: 0 0 12px; font-size: 19px; }
+    h3 { margin: 0 0 10px; font-size: 17px; }
+    .topic { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 26px;
+      margin-top: 6px;
+    }
+    .choice {
+      width: 100%;
+      text-align: left;
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+    .choice.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .choice.correct { border-color: var(--ok); color: var(--ok); }
+    .choice.wrong { border-color: var(--bad); color: var(--bad); }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #e7f4ec;
+      color: var(--ok);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.warn { background: #fff4d6; color: var(--warn); }
+    .badge.bad { background: #fde8e6; color: var(--bad); }
+    .result-list {
+      display: grid;
+      gap: 14px;
+    }
+    .result-row {
+      display: grid;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 18px;
+    }
+    .result-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .result-row p { margin: 4px 0 0; color: var(--muted); }
+    .detail {
+      display: grid;
+      gap: 12px;
+      line-height: 1.65;
+    }
+    .result-row .choice:disabled {
+      opacity: 1;
+      cursor: default;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 8px 12px;
+      margin: 0;
+    }
+    dt { color: var(--muted); font-weight: 700; }
+    dd { margin: 0; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 12px;
+      font-weight: 700;
+    }
+    .notice {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI 환각 방지 37회 대비 공인중개사 2차 모의고사</h1>
+    <p class="meta">문제 생성, 법령 대조, 채점, 오답 복습을 한 화면 흐름으로 묶은 공모전 제출용 학습도구입니다.</p>
+    <div class="signals" aria-label="검증 신호">
+      <span class="signal">법제처 MCP 검증</span>
+      <span class="signal">조문 본문 확인</span>
+      <span class="signal">정답 확정 상태 표시</span>
+      <span class="signal">개인정보ㆍAPI Key 미포함</span>
+    </div>
+  </header>
+  <main>
+    <section class="screen" id="intro-screen">
+      <article>
+        <h2>제37회 대비 1과목 미니 예제</h2>
+        <p class="notice">실제 37회 기출이 아니라, 37회 대비 학습용 예제입니다. 정답은 법제처 MCP 본문 확인 기록이 있는 문항만 확정합니다.</p>
+        <div class="grid" id="intro-metrics"></div>
+        <div class="toolbar">
+          <button class="primary" id="start" type="button">문제 풀기</button>
+          <button id="intro-reset" type="button">초기화</button>
+        </div>
+      </article>
+      <section class="steps" aria-label="학습 흐름">
+        <div class="step">1. 생성</div>
+        <div class="step">2. 법령 대조</div>
+        <div class="step">3. 채점</div>
+        <div class="step">4. 오답 복습</div>
+      </section>
+    </section>
+
+    <section class="screen" id="exam-screen" hidden>
+      <div class="toolbar">
+        <div class="count" id="answered-count">응답 0 / 10</div>
+        <div>
+          <button id="back-intro" type="button">처음으로</button>
+          <button class="primary" id="grade" type="button">채점하기</button>
+        </div>
+      </div>
+      <section id="quiz"></section>
+    </section>
+
+    <section class="screen" id="result-screen" hidden>
+      <article>
+        <h2>채점 결과</h2>
+        <div class="grid" id="result-metrics"></div>
+        <p class="notice" id="result-note"></p>
+        <div class="toolbar">
+          <button class="primary" id="retry" type="button">다시 풀기</button>
+          <button id="result-to-intro" type="button">처음으로</button>
+        </div>
+      </article>
+      <article>
+        <h2>문항별 정답ㆍ해설ㆍ법령 검증</h2>
+        <p class="notice">아래로 스크롤하면 모든 문항의 정답, 내 선택, 해설, 근거 법령, 조문, 항ㆍ호, MCP 로그를 한 번에 확인할 수 있습니다.</p>
+      </article>
+      <section class="result-list" id="result-list"></section>
+    </section>
+  </main>
+  <script>
+    const questions = [{"no":1,"subject":"공인중개사법령 및 중개실무","topic":"중개대상물 확인ㆍ설명","question":"공인중개사법상 중개대상물 확인ㆍ설명에 관한 설명으로 옳은 것은?","choices":["개업공인중개사는 중개가 완성된 후에만 확인ㆍ설명을 하면 된다.","확인ㆍ설명의 근거자료에는 신탁원부와 건축물대장 등본이 포함될 수 있다.","확인ㆍ설명서는 거래당사자에게 교부할 필요가 없다.","확인ㆍ설명서에는 개업공인중개사만 서명하고 소속공인중개사는 서명하지 않는다.","매도의뢰인에게 중개대상물 상태 자료를 요구할 수 없다."],"answer":2,"citation":"공인중개사법 제25조 제1항","explanation":"공인중개사법 제25조 제1항은 중개 완성 전에 확인ㆍ설명하고, 설명의 근거자료를 제시하도록 한다. 2025년 개정 후 신탁원부와 건축물대장 등본이 근거자료 목록에 포함된다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제25조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제25조","paragraph":"제1항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":2,"subject":"공인중개사법령 및 중개실무","topic":"중개사무소 개설등록","question":"공인중개사법상 중개사무소 개설등록에 관한 설명으로 옳은 것은?","choices":["소속공인중개사는 단독으로 중개사무소 개설등록을 신청할 수 있다.","공인중개사 또는 법인이 아닌 자도 개설등록을 신청할 수 있다.","중개업을 영위하려는 자는 등록관청에 중개사무소 개설등록을 하여야 한다.","개설등록 기준은 시ㆍ도 조례로만 정한다.","법인의 경우 분사무소 소재지를 기준으로 주된 중개사무소 등록을 한다."],"answer":3,"citation":"공인중개사법 제9조 제1항","explanation":"공인중개사법 제9조 제1항은 중개업을 영위하려는 자가 중개사무소를 두려는 지역의 등록관청에 개설등록을 하도록 정한다. 같은 조 제2항은 공인중개사 또는 법인이 아닌 자의 신청을 제한한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제9조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제9조","paragraph":"제1항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":3,"subject":"공인중개사법령 및 중개실무","topic":"등록 결격사유","question":"공인중개사법상 중개사무소 개설등록의 결격사유에 해당하는 것은?","choices":["벌금 100만원을 선고받고 1년이 지난 자","이 법을 위반하여 300만원 이상의 벌금형을 선고받고 3년이 지나지 않은 자","소속공인중개사로 1년 근무한 자","공인중개사 자격 취득 후 교육을 이수한 자","법인의 사원이 모두 결격사유가 없는 경우의 법인"],"answer":2,"citation":"공인중개사법 제10조 제1항 제11호","explanation":"공인중개사법 제10조 제1항 제11호는 이 법을 위반하여 300만원 이상의 벌금형을 선고받고 3년이 지나지 않은 자를 결격사유로 둔다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제10조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제10조","paragraph":"제1항","subparagraph":"제11호","verificationSource":"법제처 MCP get_law_text"},{"no":4,"subject":"공인중개사법령 및 중개실무","topic":"사무소 명칭","question":"개업공인중개사의 사무소 명칭에 관한 설명으로 옳은 것은?","choices":["개업공인중개사는 사무소 명칭에 공인중개사사무소 또는 부동산중개라는 문자를 사용하여야 한다.","개업공인중개사가 아니어도 부동산중개와 유사한 명칭을 사용할 수 있다.","옥외광고물을 설치하는 경우 성명 표기는 금지된다.","등록관청은 위반 간판의 철거를 명할 수 없다.","사무소 명칭은 전적으로 자유롭게 정할 수 있다."],"answer":1,"citation":"공인중개사법 제18조 제1항","explanation":"공인중개사법 제18조 제1항은 개업공인중개사의 사무소 명칭에 공인중개사사무소 또는 부동산중개라는 문자를 사용하도록 한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제18조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제18조","paragraph":"제1항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":5,"subject":"공인중개사법령 및 중개실무","topic":"등록증 대여 금지","question":"중개사무소등록증 대여 등의 금지에 관한 설명으로 옳은 것은?","choices":["개업공인중개사는 자기 중개사무소등록증을 가족에게 대여할 수 있다.","타인의 성명 또는 상호를 사용한 중개업무는 허용된다.","금지행위를 알선하는 행위도 금지된다.","중개사무소등록증 양도는 신고하면 가능하다.","상호 사용만 빌려주는 것은 법에서 제한하지 않는다."],"answer":3,"citation":"공인중개사법 제19조 제3항","explanation":"공인중개사법 제19조는 성명ㆍ상호 사용, 등록증 양도ㆍ대여 및 그 알선을 금지한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제19조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제19조","paragraph":"제3항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":6,"subject":"공인중개사법령 및 중개실무","topic":"중개사무소 이전신고","question":"중개사무소 이전신고에 관한 설명으로 옳은 것은?","choices":["중개사무소를 이전한 때에는 이전한 날부터 10일 이내에 신고하여야 한다.","관할 지역 외로 이전해도 종전 등록관청에만 신고한다.","이전신고 전 발생한 사유에 대한 행정처분은 종전 등록관청만 한다.","이전신고는 폐업신고 후에만 가능하다.","중개사무소 이전은 신고 대상이 아니다."],"answer":1,"citation":"공인중개사법 제20조 제1항","explanation":"공인중개사법 제20조 제1항은 이전한 날부터 10일 이내 이전신고를 규정한다. 관할 지역 외 이전은 이전 후 등록관청에 신고한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제20조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제20조","paragraph":"제1항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":7,"subject":"공인중개사법령 및 중개실무","topic":"손해배상책임 보장","question":"개업공인중개사의 손해배상책임 보장에 관한 설명으로 옳은 것은?","choices":["업무 개시 후 1년 이내에만 보증보험에 가입하면 된다.","고의 또는 과실로 거래당사자에게 재산상 손해를 발생하게 한 때에는 배상책임이 있다.","공탁금은 폐업한 날부터 즉시 회수할 수 있다.","보장금액과 보장기간은 거래당사자에게 설명할 필요가 없다.","중개사무소를 타인의 중개행위 장소로 제공한 경우에는 책임이 없다."],"answer":2,"citation":"공인중개사법 제30조 제1항","explanation":"공인중개사법 제30조 제1항은 고의 또는 과실로 거래당사자에게 재산상 손해를 발생하게 한 때의 배상책임을 정한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제30조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제30조","paragraph":"제1항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":8,"subject":"공인중개사법령 및 중개실무","topic":"계약금등 반환채무이행 보장","question":"계약금등의 반환채무이행 보장에 관한 설명으로 옳은 것은?","choices":["개업공인중개사는 거래 안전을 위해 계약금등의 예치를 권고할 수 있다.","계약금등은 반드시 개업공인중개사 개인 계좌에만 예치해야 한다.","예치 대상은 계약금에 한정되고 중도금과 잔금은 제외된다.","계약 해제 시 보증서 교부와 관계없이 매도인은 항상 즉시 수령할 수 없다.","계약금등의 관리ㆍ인출ㆍ반환절차는 법에서 전혀 정하지 않는다."],"answer":1,"citation":"공인중개사법 제31조 제1항","explanation":"공인중개사법 제31조 제1항은 거래 안전을 위해 계약금ㆍ중도금ㆍ잔금을 금융기관, 공제사업자, 신탁업자 등에 예치하도록 권고할 수 있게 한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제31조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제31조","paragraph":"제1항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":9,"subject":"공인중개사법령 및 중개실무","topic":"중개보수","question":"중개보수에 관한 설명으로 옳은 것은?","choices":["개업공인중개사의 고의 또는 과실로 거래행위가 무효ㆍ취소 또는 해제된 경우에도 보수는 받을 수 있다.","중개대상물 권리관계 확인에 소요되는 실비는 어떤 경우에도 받을 수 없다.","주택 중개보수와 실비 한도는 국토교통부령 범위 안에서 시ㆍ도 조례로 정한다.","주택 외 중개대상물의 보수는 개업공인중개사가 자유롭게 정한다.","중개보수 지급시기는 법에서 대통령령 위임 없이 직접 정한다."],"answer":3,"citation":"공인중개사법 제32조 제4항","explanation":"공인중개사법 제32조 제4항은 주택 중개보수와 실비 한도 등을 국토교통부령 범위 안에서 시ㆍ도 조례로 정하도록 한다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제32조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제32조","paragraph":"제4항","subparagraph":"","verificationSource":"법제처 MCP get_law_text"},{"no":10,"subject":"공인중개사법령 및 중개실무","topic":"금지행위","question":"공인중개사법상 개업공인중개사등의 금지행위에 해당하는 것은?","choices":["중개대상물의 상태와 권리관계를 설명하는 행위","중개대상물의 매매를 업으로 하는 행위","거래계약서에 서명 및 날인하는 행위","중개의뢰인에게 손해배상책임 보장사항을 설명하는 행위","중개사무소 이전 사실을 신고하는 행위"],"answer":2,"citation":"공인중개사법 제33조 제1항 제1호","explanation":"공인중개사법 제33조 제1항 제1호는 중개대상물의 매매를 업으로 하는 행위를 금지행위로 둔다.","verificationStatus":"검증완료","verificationLog":"MCP get_law_text: 공인중개사법 mst=273341, 제33조. 공포일 20250814, 시행일 20260215.","lawName":"공인중개사법","article":"제33조","paragraph":"제1항","subparagraph":"제1호","verificationSource":"법제처 MCP get_law_text"}];
+    const state = new Map();
+    let graded = false;
+
+    const screens = {
+      intro: document.querySelector('#intro-screen'),
+      exam: document.querySelector('#exam-screen'),
+      result: document.querySelector('#result-screen'),
+    };
+    const quiz = document.querySelector('#quiz');
+    const answeredCount = document.querySelector('#answered-count');
+    const resultMetrics = document.querySelector('#result-metrics');
+    const resultList = document.querySelector('#result-list');
+    const resultNote = document.querySelector('#result-note');
+
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+
+    function show(name) {
+      Object.entries(screens).forEach(([key, screen]) => {
+        screen.hidden = key !== name;
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function citationText(q) {
+      return [q.lawName, q.article, q.paragraph, q.subparagraph].filter(Boolean).join(' ');
+    }
+
+    function clauseText(q) {
+      return [q.paragraph, q.subparagraph].filter(Boolean).join(' ') || '-';
+    }
+
+    function verificationBadge(status) {
+      const badge = el('span', 'badge', status);
+      if (status === '내용검토필요') badge.classList.add('warn');
+      if (status === '검증실패') badge.classList.add('bad');
+      return badge;
+    }
+
+    function metric(label, value) {
+      const box = el('div', 'metric');
+      box.append(el('span', '', label), el('strong', '', value));
+      return box;
+    }
+
+    function selectedAnswer(q) {
+      return state.has(q.no) ? state.get(q.no) : null;
+    }
+
+    function isCorrect(q) {
+      return selectedAnswer(q) === q.answer;
+    }
+
+    function updateIntro() {
+      const verified = questions.filter((q) => q.verificationStatus === '검증완료').length;
+      document.querySelector('#intro-metrics').replaceChildren(
+        metric('문항 수', String(questions.length)),
+        metric('검증완료', String(verified)),
+        metric('과목', '1과목'),
+        metric('형식', '5지선다')
+      );
+    }
+
+    function render() {
+      quiz.replaceChildren();
+      questions.forEach((q) => {
+        const article = document.createElement('article');
+        const topic = document.createElement('div');
+        topic.className = 'topic';
+        topic.textContent = q.subject + ' · ' + q.topic;
+        const h2 = document.createElement('h2');
+        h2.textContent = '문제 ' + q.no + '. ' + q.question;
+        article.append(topic, h2);
+
+        q.choices.forEach((choice, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'choice';
+          btn.textContent = (idx + 1) + '. ' + choice;
+          btn.disabled = graded;
+          if (selectedAnswer(q) === idx + 1) btn.classList.add('selected');
+          btn.addEventListener('click', () => choose(q, idx + 1));
+          article.append(btn);
+        });
+        quiz.append(article);
+      });
+      updateAnswered();
+    }
+
+    function choose(q, selected) {
+      if (graded) return;
+      state.set(q.no, selected);
+      render();
+    }
+
+    function updateAnswered() {
+      answeredCount.textContent = '응답 ' + state.size + ' / ' + questions.length;
+    }
+
+    function gradeExam() {
+      graded = true;
+      renderResult();
+      show('result');
+    }
+
+    function renderResult() {
+      const correct = questions.filter(isCorrect).length;
+      const unanswered = questions.length - state.size;
+      const verified = questions.filter((q) => q.verificationStatus === '검증완료').length;
+      resultMetrics.replaceChildren(
+        metric('점수', Math.round((correct / questions.length) * 100) + '점'),
+        metric('정답', correct + '개'),
+        metric('오답', questions.length - correct + '개'),
+        metric('검증완료', verified + '개')
+      );
+      resultNote.textContent = unanswered > 0
+        ? '미응답 ' + unanswered + '문항은 오답으로 처리했습니다.'
+        : '모든 문항에 응답했습니다.';
+
+      resultList.replaceChildren();
+      questions.forEach((q) => {
+        const row = el('article', 'result-row');
+        const head = el('div', 'result-head');
+        const left = el('div');
+        const title = el('h3', '', '문제 ' + q.no + '. ' + q.topic);
+        const picked = selectedAnswer(q) == null ? '미응답' : selectedAnswer(q) + '번';
+        const status = isCorrect(q) ? '정답' : '오답';
+        const summary = el('p', '', status + ' · 선택 ' + picked + ' · 정답 ' + q.answer + '번 · ' + citationText(q));
+        left.append(title, summary, verificationBadge(q.verificationStatus));
+
+        const mark = el('strong', '', status);
+        mark.style.color = isCorrect(q) ? 'var(--ok)' : 'var(--bad)';
+        head.append(left, mark);
+        row.append(head);
+
+        q.choices.forEach((choice, idx) => {
+          const btn = el('button', 'choice', (idx + 1) + '. ' + choice);
+          btn.type = 'button';
+          btn.disabled = true;
+          if (idx + 1 === q.answer) btn.classList.add('correct');
+          if (selectedAnswer(q) === idx + 1 && selectedAnswer(q) !== q.answer) btn.classList.add('wrong');
+          row.append(btn);
+        });
+
+        const dl = el('dl');
+        appendDl(dl, '정답', q.answer + '번');
+        appendDl(dl, '내 선택', selectedAnswer(q) == null ? '미응답' : selectedAnswer(q) + '번');
+        appendDl(dl, '해설', q.explanation);
+        appendDl(dl, '근거 법령', q.lawName);
+        appendDl(dl, '조문', q.article);
+        appendDl(dl, '항ㆍ호', clauseText(q));
+        appendDl(dl, '검증출처', q.verificationSource);
+        appendDl(dl, 'MCP 로그', q.verificationLog);
+        row.append(dl, verificationBadge(q.verificationStatus));
+        resultList.append(row);
+      });
+    }
+
+    function appendDl(dl, label, value) {
+      dl.append(el('dt', '', label), el('dd', '', value));
+    }
+
+    function resetAll(target) {
+      state.clear();
+      graded = false;
+      render();
+      show(target || 'intro');
+    }
+
+    document.querySelector('#intro-reset').addEventListener('click', () => resetAll('intro'));
+    document.querySelector('#start').addEventListener('click', () => {
+      render();
+      show('exam');
+    });
+    document.querySelector('#back-intro').addEventListener('click', () => show('intro'));
+    document.querySelector('#grade').addEventListener('click', gradeExam);
+    document.querySelector('#retry').addEventListener('click', () => resetAll('exam'));
+    document.querySelector('#result-to-intro').addEventListener('click', () => show('intro'));
+    updateIntro();
+    render();
+  </script>
+</body>
+</html>
