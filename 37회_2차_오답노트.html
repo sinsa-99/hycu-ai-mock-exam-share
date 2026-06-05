@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>37회 대비 공인중개사 2차 오답노트</title>
+  <style>
+    @font-face {
+      font-family: 'Pretendard Variable';
+      font-weight: 45 920;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2-variations');
+    }
+    :root {
+      --blue: #004C85;
+      --blue-deep: #003A66;
+      --blue-soft: #EAF1F7;
+      --blue-mist: #F3F7FA;
+      --ink: #23262B;
+      --ink-soft: #3F3D42;
+      --muted: #6A727B;
+      --line: #E5E9EE;
+      --line-strong: #D4DAE1;
+      --panel: #FFFFFF;
+      --bg: #F4F6F8;
+      --ok: #1A7A43;
+      --ok-soft: #E7F3EB;
+      --bad: #C13029;
+      --bad-soft: #FAE9E7;
+      --warn: #976A02;
+      --warn-soft: #FBF1D9;
+      --radius: 12px;
+      --radius-sm: 9px;
+      --maxw: 1180px;
+      --shadow-sm: 0 1px 2px rgba(0,42,73,.06), 0 1px 3px rgba(0,42,73,.05);
+      --shadow: 0 6px 22px rgba(0,42,73,.09);
+      --accent: var(--blue);
+      --accent-soft: var(--blue-soft);
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Segoe UI', 'Malgun Gothic', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      letter-spacing: -0.003em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    ::selection { background: rgba(0,76,133,.18); }
+    header {
+      position: relative;
+      background: linear-gradient(135deg, #00538F 0%, #004C85 42%, #003A66 100%);
+      color: #fff;
+      padding: 0;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      right: -120px; top: -140px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(255,255,255,.10), rgba(255,255,255,0) 70%);
+      pointer-events: none;
+    }
+    .header-inner { position: relative; max-width: var(--maxw); margin: 0 auto; padding: 32px 18px 26px; }
+    .eyebrow { margin: 0 0 11px; font-size: 12px; font-weight: 700; letter-spacing: .05em; color: rgba(255,255,255,.74); display: flex; align-items: center; gap: 9px; }
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: rgba(255,255,255,.55); border-radius: 2px; }
+    h1 { margin: 0 0 10px; font-size: 27px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
+    h2 { margin: 0 0 13px; font-size: 20px; font-weight: 750; letter-spacing: -0.015em; color: var(--ink); }
+    h3 { margin: 0 0 8px; font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.5; }
+    .meta, .notice { color: var(--muted); line-height: 1.65; }
+    header .meta { color: rgba(255,255,255,.85); max-width: 760px; }
+    main { max-width: var(--maxw); margin: 0 auto; padding: 22px 18px 56px; display: grid; gap: 14px; }
+    article, .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); }
+    .signals, .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .signals { margin-top: 16px; }
+    .toolbar { justify-content: space-between; }
+    .toolbar > div { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .signal, .badge { display: inline-block; border-radius: 999px; padding: 5px 11px; font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
+    .signal { border: 1px solid var(--line-strong); background: #fff; color: var(--muted); }
+    header .signal { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.26); color: #fff; backdrop-filter: blur(2px); }
+    .badge { background: var(--ok-soft); color: var(--ok); border: 1px solid rgba(26,122,67,.22); }
+    .badge.warn { background: var(--warn-soft); color: var(--warn); border-color: rgba(151,106,2,.24); }
+    .badge.bad { background: var(--bad-soft); color: var(--bad); border-color: rgba(193,48,41,.22); }
+    button, a.button-link, select { border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); border-radius: var(--radius-sm); padding: 9px 14px; font-family: inherit; font-size: 14px; font-weight: 700; transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease; }
+    button { cursor: pointer; }
+    select { cursor: pointer; }
+    a.button-link { display: inline-block; text-decoration: none; }
+    button.primary, a.primary { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 2px 8px rgba(0,76,133,.22); }
+    button:hover, a.button-link:hover, select:hover { border-color: var(--blue); background: var(--blue-soft); color: var(--blue-deep); }
+    button.primary:hover, a.primary:hover { background: var(--blue-deep); border-color: var(--blue-deep); color: #fff; }
+    button:focus-visible, a.button-link:focus-visible, select:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0,76,133,.22); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 11px; }
+    .metric { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 15px 16px; background: var(--panel); position: relative; overflow: hidden; }
+    .metric::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--blue); opacity: .85; }
+    .metric > span:first-child { color: var(--muted); font-size: 12.5px; font-weight: 700; }
+    .metric strong { display: block; font-size: 23px; font-weight: 800; margin-top: 5px; color: var(--ink); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .note-list { display: grid; gap: 14px; }
+    .note-list article { transition: box-shadow .18s ease, border-color .18s ease; }
+    .note-list article:hover { box-shadow: var(--shadow); border-color: var(--line-strong); }
+    .topic { color: var(--muted); font-size: 12.5px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .stem-box { border: 1px solid var(--line); border-left: 3px solid var(--blue); border-radius: var(--radius-sm); padding: 13px 16px; margin: 13px 0; background: var(--blue-mist); display: grid; gap: 8px; line-height: 1.6; }
+    .stem-box div { white-space: pre-line; }
+    .visual-box { border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 0; margin: 13px 0; background: #fff; overflow: hidden; }
+    .visual-title { font-weight: 800; padding: 11px 14px; background: var(--blue); color: #fff; font-size: 14px; letter-spacing: -0.01em; }
+    .visual-row { display: grid; grid-template-columns: 118px minmax(0, 1fr); border-top: 1px solid var(--line); min-height: 42px; }
+    .visual-row:first-of-type { border-top: 0; }
+    .visual-label { background: var(--blue-mist); color: var(--blue-deep); font-weight: 700; padding: 10px 12px; border-right: 1px solid var(--line); }
+    .visual-value { padding: 10px 12px; line-height: 1.55; }
+    .visual-note { padding: 0 14px 12px; color: var(--muted); font-size: 12.5px; }
+    .known-excluded { opacity: 0.6; background: #f7f9fb; }
+    .choice { width: 100%; text-align: left; margin-top: 9px; line-height: 1.55; padding: 11px 14px; cursor: default; border-color: var(--line-strong); position: relative; }
+    .choice.selected { border-color: var(--blue); background: var(--blue-soft); color: var(--blue-deep); box-shadow: inset 2px 0 0 var(--blue); }
+    .choice.correct { border-color: var(--ok); color: var(--ok); background: var(--ok-soft); box-shadow: inset 2px 0 0 var(--ok); }
+    .choice.wrong { border-color: var(--bad); color: var(--bad); background: var(--bad-soft); box-shadow: inset 2px 0 0 var(--bad); }
+    .empty { border: 1px dashed var(--line-strong); border-radius: var(--radius-sm); padding: 22px; color: var(--muted); background: var(--blue-mist); text-align: center; }
+    .result-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+    dl { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 8px 14px; margin: 14px 0 0; line-height: 1.6; padding-top: 13px; border-top: 1px solid var(--line); }
+    dt { color: var(--muted); font-weight: 700; font-size: 13.5px; }
+    dd { margin: 0; }
+    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    ::-webkit-scrollbar-thumb { background: #c5ccd4; border: 3px solid var(--bg); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #aab3bd; }
+    @media (max-width: 720px) {
+      main { padding: 14px 12px 40px; }
+      .header-inner { padding: 24px 12px 22px; }
+      h1 { font-size: 23px; }
+      .toolbar { align-items: stretch; }
+      dl { grid-template-columns: 92px minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <p class="eyebrow">한양대학교 · 오답노트</p>
+      <h1>37회 대비 공인중개사 2차 오답노트</h1>
+      <p class="meta">모의고사를 채점하면 틀린 문항이 이 브라우저에 저장되고, 이 페이지에서 모든 회차 오답을 합쳐 과목별로 다시 봅니다.</p>
+      <div class="signals">
+        <span class="signal">오답만 모아보기</span>
+        <span class="signal">회차 통합</span>
+        <span class="signal">과목별 필터</span>
+        <span class="signal">MCP 로그 보존</span>
+        <span class="signal">API Key 미포함</span>
+      </div>
+    </div>
+  </header>
+  <main>
+    <article>
+      <h2>저장 현황</h2>
+      <div class="grid" id="summary"></div>
+      <p class="notice">오답노트는 같은 브라우저의 localStorage에 최대 50회 응시 기록까지 저장됩니다. 회차는 전부 합쳐 보고, 과목 필터로 약점을 구분합니다. 이미 아는 문항은 제외해 복습 대상에서 숨길 수 있습니다.</p>
+      <div class="toolbar">
+        <div class="filters">
+          <select id="subject-filter" aria-label="과목 필터"></select>
+        </div>
+        <div>
+          <button id="toggle-excluded" type="button">제외한 문항 표시</button>
+          <button id="export-json" type="button">JSON 내보내기</button>
+          <button id="export-csv" type="button">CSV 내보내기</button>
+          <button id="clear" type="button">저장 기록 삭제</button>
+          <a class="button-link primary" href="./37회_2차_full_패턴모의고사.html">모의고사로 돌아가기</a>
+        </div>
+      </div>
+    </article>
+    <section class="note-list" id="wrong-list"></section>
+  </main>
+  <script>
+    const STORAGE_KEY = 'hycuMock37Attempts.v1';
+    const EXCLUDED_KEY = 'hycuMock37Excluded.v1';
+    let activeSubject = 'all';
+    let showExcluded = false;
+
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+    function readAttempts() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    function readExcluded() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(EXCLUDED_KEY) || '[]');
+        return Array.isArray(parsed) ? new Set(parsed) : new Set();
+      } catch {
+        return new Set();
+      }
+    }
+    function writeExcluded(set) {
+      localStorage.setItem(EXCLUDED_KEY, JSON.stringify([...set]));
+    }
+    function isExcluded(id) {
+      return readExcluded().has(id);
+    }
+    function toggleExcluded(id) {
+      const excluded = readExcluded();
+      if (excluded.has(id)) excluded.delete(id);
+      else excluded.add(id);
+      writeExcluded(excluded);
+      render();
+    }
+    function formatDate(iso) {
+      const date = new Date(iso);
+      if (Number.isNaN(date.getTime())) return iso || '-';
+      return date.toLocaleString('ko-KR', { dateStyle: 'short', timeStyle: 'short' });
+    }
+    function attemptTitle(attempt) {
+      return '모의고사 ' + attempt.setNo + '회차';
+    }
+    function metric(label, value) {
+      const box = el('div', 'metric');
+      box.append(el('span', '', label), el('strong', '', value));
+      return box;
+    }
+    function badge(status) {
+      const b = el('span', 'badge', status || '-');
+      if (status === '내용검토필요') b.classList.add('warn');
+      if (status === '검증실패') b.classList.add('bad');
+      return b;
+    }
+    function clause(q) {
+      return [q.paragraph, q.subparagraph].filter(Boolean).join(' ') || '-';
+    }
+    function visualBox(visual) {
+      if (!visual) return null;
+      const box = el('div', 'visual-box');
+      box.append(el('div', 'visual-title', visual.title || '자료'));
+      (visual.items || []).forEach((item) => {
+        const row = el('div', 'visual-row');
+        row.append(el('div', 'visual-label', item[0]), el('div', 'visual-value', item[1]));
+        box.append(row);
+      });
+      if (visual.note) box.append(el('div', 'visual-note', visual.note));
+      return box;
+    }
+    function allWrongRows() {
+      return readAttempts().flatMap((attempt) =>
+        (attempt.wrongItems || []).map((item) => ({ attempt, item }))
+      );
+    }
+    function filteredRows() {
+      return allWrongRows().filter(({ item }) => {
+        if (activeSubject !== 'all' && item.subject !== activeSubject) return false;
+        if (!showExcluded && isExcluded(item.id)) return false;
+        return true;
+      });
+    }
+    function subjectOptions() {
+      const values = [...new Set(allWrongRows().map(({ item }) => item.subject).filter(Boolean))].sort();
+      const select = document.querySelector('#subject-filter');
+      select.replaceChildren();
+      select.append(new Option('전체 과목', 'all'));
+      values.forEach((value) => select.append(new Option(value, value)));
+      select.value = activeSubject;
+    }
+    function renderSummary() {
+      const attempts = readAttempts();
+      const rows = allWrongRows();
+      const current = filteredRows();
+      const latest = attempts[0] ? formatDate(attempts[0].takenAt) : '-';
+      const excluded = readExcluded();
+      document.querySelector('#summary').replaceChildren(
+        metric('저장 응시', attempts.length + '회'),
+        metric('전체 오답', rows.length + '문항'),
+        metric('복습 대상', current.length + '문항'),
+        metric('제외됨', rows.filter(({ item }) => excluded.has(item.id)).length + '문항'),
+        metric('최근 응시', latest)
+      );
+      document.querySelector('#toggle-excluded').textContent = showExcluded ? '제외한 문항 숨기기' : '제외한 문항 표시';
+    }
+    function appendDl(dl, label, value) {
+      dl.append(el('dt', '', label), el('dd', '', value));
+    }
+    function renderWrongCard(row) {
+      const { attempt, item } = row;
+      const picked = item.picked == null ? '미응답' : item.picked + '번';
+      const card = el('article');
+      if (isExcluded(item.id)) card.classList.add('known-excluded');
+      const head = el('div', 'result-head');
+      const left = el('div');
+      left.append(el('h3', '', item.subject + ' · 문제 ' + item.period + '-' + item.no + '. ' + item.topic));
+      left.append(el('p', 'notice', attemptTitle(attempt) + ' · ' + formatDate(attempt.takenAt) + ' · ' + item.questionType + ' · 난이도 ' + item.difficulty + ' · 선택 ' + picked + ' · 정답 ' + item.answer + '번'));
+      left.append(badge(item.verificationStatus));
+      if (isExcluded(item.id)) left.append(el('span', 'badge warn', '아는 문제 제외됨'));
+      const action = el('button', '', isExcluded(item.id) ? '다시 포함' : '아는 문제로 제외');
+      action.type = 'button';
+      action.addEventListener('click', () => toggleExcluded(item.id));
+      head.append(left, action);
+      card.append(head);
+      card.append(el('p', '', item.question));
+      if (item.passage && item.passage.length > 0) {
+        const box = el('div', 'stem-box');
+        item.passage.forEach((line) => box.append(el('div', '', line)));
+        card.append(box);
+      }
+      if (item.visual) card.append(visualBox(item.visual));
+      (item.choices || []).forEach((choice, index) => {
+        const button = el('button', 'choice', (index + 1) + '. ' + choice);
+        button.type = 'button';
+        button.disabled = true;
+        if (index + 1 === item.answer) button.classList.add('correct');
+        if (item.picked === index + 1 && item.picked !== item.answer) button.classList.add('wrong');
+        card.append(button);
+      });
+      const dl = el('dl');
+      appendDl(dl, '정답', item.answer + '번');
+      appendDl(dl, '내 선택', picked);
+      appendDl(dl, '해설', item.explanation);
+      appendDl(dl, '근거 법령', item.lawName);
+      appendDl(dl, '조문', item.article);
+      appendDl(dl, '항ㆍ호', clause(item));
+      appendDl(dl, '검증상태', item.verificationStatus);
+      appendDl(dl, 'MCP 로그', item.verificationLog);
+      card.append(dl);
+      return card;
+    }
+    function renderList() {
+      const list = document.querySelector('#wrong-list');
+      const rows = filteredRows();
+      list.replaceChildren();
+      if (rows.length === 0) {
+        list.append(el('div', 'empty', '저장된 오답이 없습니다. 모의고사를 풀고 채점하기를 누르면 이곳에 오답이 자동으로 모입니다.'));
+        return;
+      }
+      const grouped = new Map();
+      rows.forEach((row) => {
+        const key = row.item.subject || '미분류';
+        const bucket = grouped.get(key) || [];
+        bucket.push(row);
+        grouped.set(key, bucket);
+      });
+      [...grouped.entries()].sort(([a], [b]) => a.localeCompare(b, 'ko')).forEach(([subject, subjectRows]) => {
+        const summary = el('article');
+        summary.append(el('h3', '', subject));
+        summary.append(el('p', 'notice', '모든 회차 통합 오답 ' + subjectRows.length + '문항'));
+        list.append(summary);
+        subjectRows.forEach((row) => list.append(renderWrongCard(row)));
+      });
+    }
+    function download(name, mime, content) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    function csvCell(value) {
+      const text = String(value ?? '');
+      return /[",\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+    }
+    function exportCsv() {
+      const rows = [['회차', '응시일', '과목', '번호', '주제', '유형', '난이도', '내 선택', '정답', '근거 법령', '조문', '검증상태']];
+      filteredRows().forEach(({ attempt, item }) => {
+        rows.push([
+          attemptTitle(attempt),
+          formatDate(attempt.takenAt),
+          item.subject,
+          item.period + '-' + item.no,
+          item.topic,
+          item.questionType,
+          item.difficulty,
+          item.picked == null ? '미응답' : item.picked + '번',
+          item.answer + '번',
+          item.lawName,
+          item.article,
+          item.verificationStatus,
+        ]);
+      });
+      download('37회_2차_오답노트.csv', 'text/csv;charset=utf-8', '\ufeff' + rows.map((row) => row.map(csvCell).join(',')).join('\n'));
+    }
+    function render() {
+      subjectOptions();
+      renderSummary();
+      renderList();
+    }
+    document.querySelector('#subject-filter').addEventListener('change', (event) => {
+      activeSubject = event.target.value;
+      render();
+    });
+    document.querySelector('#toggle-excluded').addEventListener('click', () => {
+      showExcluded = !showExcluded;
+      render();
+    });
+    document.querySelector('#export-json').addEventListener('click', () => {
+      download('37회_2차_오답노트.json', 'application/json;charset=utf-8', JSON.stringify({ attempts: readAttempts(), excluded: [...readExcluded()] }, null, 2));
+    });
+    document.querySelector('#export-csv').addEventListener('click', exportCsv);
+    document.querySelector('#clear').addEventListener('click', () => {
+      if (!confirm('저장된 응시 기록과 오답노트를 삭제할까요?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(EXCLUDED_KEY);
+      activeSubject = 'all';
+      showExcluded = false;
+      render();
+    });
+    render();
+  </script>
+</body>
+</html>
